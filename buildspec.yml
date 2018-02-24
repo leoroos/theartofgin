@@ -4,7 +4,8 @@ env:
   variables:
     S3_BUCKET: theartofgin-codebuild-artifacts
     S3_SAM_PREFIX: sam-artifacts
-    # STACK_NAME: theartofgin-serverless-stack
+  parameters-store:
+    WEBSITE_BUCKET: /theartofgin/websitebucket
 
 
 phases:
@@ -20,6 +21,8 @@ phases:
         aws cloudformation package --s3-bucket $S3_BUCKET --s3-prefix $S3_SAM_PREFIX \
             --template template.yml \
             --output-template template-export.yml
+      - echo  "Deploying new website artifacts, should be done in staging and deployment step"
+      - aws s3 cp --recursive public/ s3://$WEBSITE_BUCKET/
 
   # post_build:
   #   commands:
@@ -29,3 +32,4 @@ artifacts:
  type: zip
  files:
    - template-export.yml
+   - public/
