@@ -28,12 +28,12 @@ Resources:
             Statement:
               - Action:
                 Effect: Allow
-							  Resource: !Sub arn:aws:dynamodb:us-west-2:123456789012:table/${ProjectName}
+                Resource: !Sub arn:aws:dynamodb:us-west-2:123456789012:table/${ProjectName}
   GetHelloWorld:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-			Runtime: python3.6
+      Runtime: python3.6
       Role: !Ref LambdaTrustRole
       Events:
         GetEvent:
@@ -41,4 +41,24 @@ Resources:
           Properties:
             Path: /
             Method: get
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+  BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Sub 'arn:aws:s3:::${WebsiteBucket}/*'
+      Bucket: !Ref WebsiteBucket
 

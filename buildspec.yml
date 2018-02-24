@@ -1,15 +1,28 @@
 version: 0.2
 
+env:
+  variables:
+    S3_BUCKET: codebuild-theartofgin-artifacts
+    S3_SERVERLESS_PREFIX: serverless
+    STACK_NAME: theartofgin-serverless-stack
+
+
 phases:
   build:
     commands:
+      - echo "See some differences in the build log"
       - pip install --upgrade awscli
+      - env
       #- aws s3 cp --recursive public/ s3://$WEBSITE_S3_BUCKET/public/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
       #- sed -i -e "s|assets/|$WEBSITE_S3_PREFIX/public/assets/|g" public/index.html
-      # - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template template-export.yml
+      - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --s3-prefix $S3_SERVERLESS_PREFIX \
+        --output-template template-export.yml
+
+  post_build:
+    commands:
+      - aws cloudformation deploy --template-file template-export.yml --stack-name $STACK_NAME
 
 artifacts:
  type: zip
  files:
-   # - template-export.yml
-   - template.yml
+   - template-export.yml
