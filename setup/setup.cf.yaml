@@ -6,7 +6,7 @@ Parameters:
     Default: theartofgin
 
 Resources:
-  CodeDeployServiceRole: 
+  CodeDeployServiceRole:
       Type: AWS::IAM::Role
       Properties:
           Path: /
@@ -20,7 +20,7 @@ Resources:
                 Service: codedeploy.amazonaws.com
           ManagedPolicyArns:
             - 'arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForLambda'
-  CodeBuildServiceRole: 
+  CodeBuildServiceRole:
       Type: AWS::IAM::Role
       Properties:
           Path: /
@@ -55,7 +55,7 @@ Resources:
                 - arn:aws:ssm:eu-central-1:872695986225:parameter/theartofgin/*
                 Action:
                 - ssm:GetParameters
-  CodePipelineServiceRole: 
+  CodePipelineServiceRole:
       Type: AWS::IAM::Role
       Properties:
           Path: /
@@ -126,7 +126,7 @@ Resources:
                   - codebuild:StartBuild
                   Effect: Allow
                   Resource: "*"
-  CodePipelineCloudformationServiceRole: 
+  CodePipelineCloudformationServiceRole:
       Type: AWS::IAM::Role
       Properties:
           Path: /
@@ -193,7 +193,7 @@ Resources:
         ErrorDocument: error.html
   WebsiteBucketSSMParameter:
     Type: "AWS::SSM::Parameter"
-    Properties: 
+    Properties:
       Name: /theartofgin/websitebucket
       Type: String
       Value: !Ref WebsiteBucket

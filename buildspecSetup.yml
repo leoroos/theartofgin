@@ -1,0 +1,16 @@
+version: 0.2
+
+env:
+  variables:
+    S3_BUCKET: theartofgin-codebuild-artifacts
+
+phases:
+  build:
+    commands:
+      - aws s3 cp setup/setup.cf.yaml s3://$S3_BUCKET/cloudformation/setup.cf.yaml
+      - |
+        aws cloudformation update-stack \
+            --stack-name theartofgin-setup \
+            --template-url https://s3.eu-central-1.amazonaws.com/$S3_BUCKET/cloudformation/setup.cf.yaml \
+            --capabilities CAPABILITY_NAMED_IAM
+
