@@ -148,3 +148,31 @@ Resources:
                   - cloudformation:CreateChangeSet
                   Resource: "*"
                   Effect: Allow
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    BucketName: theartofgin.lroos.com
+    Properties:
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+  WebsiteBucketSSMParameter:
+    Type: "AWS::SSM::Parameter"
+    Properties: 
+      Name: /theartofgin/websitebucket
+      Type: String
+      Value: !Ref WebsiteBucket
+  BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      PolicyDocument:
+        Id: WebsiteBucketPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Sub 'arn:aws:s3:::${WebsiteBucket}/*'
+      Bucket: !Ref WebsiteBucket
+
