@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    S3_BUCKET: codebuild-theartofgin-artifacts
+    S3_BUCKET: codepipeline-eu-central-1-331935007320
     S3_SERVERLESS_PREFIX: serverless
     STACK_NAME: theartofgin-serverless-stack
 
