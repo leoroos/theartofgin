@@ -4,7 +4,7 @@ env:
   variables:
     S3_BUCKET: theartofgin-codebuild-artifacts
     S3_SAM_PREFIX: sam-artifacts
-  parameters-store:
+  parameter-store:
     WEBSITE_BUCKET: '/theartofgin/websitebucket'
 
 
