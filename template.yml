@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform:
+- AWS::Serverless-2016-10-31
+
+Parameters:
+  ProjectName:
+    Type: String
+    Description: The project name to associate this stack to
+    Default: theartofgin
+
+Resources:
+  LambdaTrustRole:
+    Type: AWS::IAM::Role
+    Properties:
+        Path: /
+        RoleName: !Sub ${ProjectName}-LambdaDynamoDBAccess
+        AssumeRolePolicyDocument:
+          Version: 2012-10-17
+          Statement:
+            - Action: 'sts:AssumeRole'
+              Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+        Policies:
+        - PolicyName: !Sub ${ProjectName}-LambdaDynamoDBPolicyName
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Action:
+                Effect: Allow
+							  Resource: !Sub arn:aws:dynamodb:us-west-2:123456789012:table/${ProjectName}
+  GetHelloWorld:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+			Runtime: python3.6
+      Role: !Ref LambdaTrustRole
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
+
