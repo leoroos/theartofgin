@@ -150,8 +150,8 @@ Resources:
                   Effect: Allow
   WebsiteBucket:
     Type: AWS::S3::Bucket
-    BucketName: theartofgin.lroos.com
     Properties:
+      BucketName: theartofgin.lroos.com
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
