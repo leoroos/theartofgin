@@ -20,6 +20,41 @@ Resources:
                 Service: codedeploy.amazonaws.com
           ManagedPolicyArns:
             - 'arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForLambda'
+  CodeBuildServiceRole: 
+      Type: AWS::IAM::Role
+      Properties:
+          Path: /
+          RoleName: !Sub ${ProjectName}-CodeBuildServiceRole
+          AssumeRolePolicyDocument:
+            Version: 2012-10-17
+            Statement:
+            - Action: 'sts:AssumeRole'
+              Effect: Allow
+              Principal:
+                Service: codebuild.amazonaws.com
+          Policies:
+          - PolicyName: !Sub ${ProjectName}-CodeBuildServicePolicy
+            PolicyDocument:
+              Version: 2012-10-17
+              Statement:
+              - Effect: Allow
+                Resource:
+                - arn:aws:logs:eu-central-1:872695986225:log-group:/aws/codebuild/theartofgin*
+                Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+              - Effect: Allow
+                Resource:
+                - arn:aws:s3:::theartofgin-codebuild-artifacts/*
+                - !Sub "${WebsiteBucket.Arn}/*"
+                Action:
+                - s3:PutObject
+              - Effect: Allow
+                Resource:
+                - arn:aws:ssm:eu-central-1:872695986225:parameter/theartofgin/*
+                Action:
+                - ssm:GetParameters
   CodePipelineServiceRole: 
       Type: AWS::IAM::Role
       Properties:
@@ -175,4 +210,8 @@ Resources:
             Action: 's3:GetObject'
             Resource: !Sub 'arn:aws:s3:::${WebsiteBucket}/*'
       Bucket: !Ref WebsiteBucket
+  CodeBuildBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: theartofgin-codebuild
 
