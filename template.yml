@@ -41,7 +41,7 @@ Resources:
     Properties:
       Handler: index.handler
       Runtime: python3.6
-      Role: !Ref LambdaTrustRole
+      Role: !GetAtt LambdaTrustRole.Arn
       Events:
         GetEvent:
           Type: Api
