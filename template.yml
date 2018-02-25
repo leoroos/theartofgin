@@ -27,8 +27,15 @@ Resources:
             Version: 2012-10-17
             Statement:
               - Action:
+                - dynamodb:GetItem
+                - dynamodb:DescribeTable
+                - dynamodb:Scan
+                - dynamodb:Query
+                - dynamodb:PutItem
+                - dynamodb:UpdateItem
+                - dynamodb:DeleteItem
                 Effect: Allow
-                Resource: !Sub arn:aws:dynamodb:us-west-2:123456789012:table/${ProjectName}
+                Resource: !GetAtt GinReviews.Arn
   GetHelloWorld:
     Type: AWS::Serverless::Function
     Properties:
@@ -41,3 +48,12 @@ Resources:
           Properties:
             Path: /
             Method: get
+  GinReviews:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: reviewId
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
