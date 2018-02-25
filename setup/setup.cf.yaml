@@ -55,6 +55,11 @@ Resources:
                 - arn:aws:ssm:eu-central-1:872695986225:parameter/theartofgin/*
                 Action:
                 - ssm:GetParameters
+              - Effect: Allow
+                Resource:
+                - arn:aws:cloudformation:eu-central-1:872695986225:stack/theartofgin-*
+                Action:
+                - cloudformation:UpdateStack
   CodePipelineServiceRole:
       Type: AWS::IAM::Role
       Properties:
