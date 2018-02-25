@@ -6,20 +6,20 @@ Parameters:
     Default: theartofgin
 
 Resources:
-  CodeDeployServiceRole:
-      Type: AWS::IAM::Role
-      Properties:
-          Path: /
-          RoleName: !Sub ${ProjectName}-CodeDeployServiceRole
-          AssumeRolePolicyDocument:
-            Version: 2012-10-17
-            Statement:
-            - Action: 'sts:AssumeRole'
-              Effect: Allow
-              Principal:
-                Service: codedeploy.amazonaws.com
-          ManagedPolicyArns:
-            - 'arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForLambda'
+  # CodeDeployServiceRole:
+  #     Type: AWS::IAM::Role
+  #     Properties:
+  #         Path: /
+  #         RoleName: !Sub ${ProjectName}-CodeDeployServiceRole
+  #         AssumeRolePolicyDocument:
+  #           Version: 2012-10-17
+  #           Statement:
+  #           - Action: 'sts:AssumeRole'
+  #             Effect: Allow
+  #             Principal:
+  #               Service: codedeploy.amazonaws.com
+  #         ManagedPolicyArns:
+  #           - 'arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForLambda'
   CodeBuildServiceRole:
       Type: AWS::IAM::Role
       Properties:
@@ -50,6 +50,11 @@ Resources:
                 - !Sub "${WebsiteBucket.Arn}/*"
                 Action:
                 - s3:PutObject
+              - Effect: Allow
+                Action:
+                - s3:GetObject
+                - s3:GetObjectVersion
+                Resource: '*'
               - Effect: Allow
                 Resource:
                 - arn:aws:ssm:eu-central-1:872695986225:parameter/theartofgin/*
