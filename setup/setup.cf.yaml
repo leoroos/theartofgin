@@ -48,6 +48,7 @@ Resources:
                 Resource:
                 - arn:aws:s3:::theartofgin-codebuild-artifacts/*
                 - !Sub "${WebsiteBucket.Arn}/*"
+                - arn:aws:s3:::codepipeline-eu-central-1-*
                 Action:
                 - s3:PutObject
               - Effect: Allow
@@ -153,45 +154,7 @@ Resources:
             PolicyDocument:
               Version: 2012-10-17
               Statement:
-                - Action:
-                  - s3:PutObject
-                  - s3:GetObject
-                  - s3:GetObjectVersion
-                  Resource: "*"
-                  Effect: Allow
-                - Action:
-                  - lambda:CreateFunction
-                  - lambda:DeleteFunction
-                  - lambda:AddPermission
-                  - lambda:UpdateFunction
-                  - lambda:UpdateFunctionCode
-                  - lambda:GetFunction
-                  - lambda:GetFunctionConfiguration
-                  - lambda:UpdateFunctionConfiguration
-                  - lambda:RemovePermission
-                  - lambda:listTags
-                  - lambda:TagResource
-                  - lambda:UntagResource
-                  - apigateway:*
-                  - dynamodb:CreateTable
-                  - dynamodb:DeleteTable
-                  - dynamodb:DescribeTable
-                  - sns:CreateTopic
-                  - sns:DeleteTopic
-                  - sns:ListTopics
-                  - sns:GetTopicAttributes
-                  - sns:SetTopicAttributes
-                  - s3:CreateBucket
-                  - s3:DeleteBucket
-                  Resource: "*"
-                  Effect: Allow
-                - Action:
-                  - iam:PassRole
-                  - iam:GetRole
-                  Resource: "*"
-                  Effect: Allow
-                - Action:
-                  - cloudformation:CreateChangeSet
+                - Action: '*'
                   Resource: "*"
                   Effect: Allow
   WebsiteBucket:
