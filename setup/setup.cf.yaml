@@ -188,4 +188,10 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: theartofgin-codebuild
+  CodeBuildBucketSSMParameter:
+    Type: "AWS::SSM::Parameter"
+    Properties:
+      Name: /theartofgin/codbuildbucket
+      Type: String
+      Value: !Ref WebsiteBucket
 

@@ -3,9 +3,14 @@ version: 0.2
 env:
   parameter-store:
     WEBSITE_BUCKET: '/theartofgin/websitebucket'
+    CODEBUILD_BUCKET: '/theartofgin/codebuildbucket'
 
 phases:
   build:
     commands:
       - pip install --upgrade awscli
+      - aws s3 cp 
+      - aws s3 cp --recursive s3://theartofgin-codebuild/website-artifacts/css public/css
+      - aws s3 cp --recursive s3://theartofgin-codebuild/website-artifacts/js public/js
       - aws s3 cp --recursive public/ s3://$WEBSITE_BUCKET/
+
