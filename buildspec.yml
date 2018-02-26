@@ -4,32 +4,19 @@ env:
   variables:
     S3_BUCKET: theartofgin-codebuild-artifacts
     S3_SAM_PREFIX: sam-artifacts
-  parameter-store:
-    WEBSITE_BUCKET: '/theartofgin/websitebucket'
 
 
 phases:
   build:
     commands:
-      - echo "See some differences in the build log"
       - pip install --upgrade awscli
-      - env
-      #- aws s3 cp --recursive public/ s3://$WEBSITE_S3_BUCKET/public/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
-      #- sed -i -e "s|assets/|$WEBSITE_S3_PREFIX/public/assets/|g" public/index.html
-      - echo $S3_BUCKET $S3_SAM_PREFIX $WEBSITE_BUCKET
       - |
         aws cloudformation package --s3-bucket $S3_BUCKET --s3-prefix $S3_SAM_PREFIX \
             --template template.yml \
             --output-template template-export.yml
-      - echo  "Deploying new website artifacts, should be done in staging and deployment step"
-      - aws s3 cp --recursive public/ s3://$WEBSITE_BUCKET/
 
-  # post_build:
-  #   commands:
-  #     - aws cloudformation deploy --template-file template-export.yml --stack-name $STACK_NAME
 
 artifacts:
  type: zip
  files:
-   - template-export.yml
-   - public/
+   -template-export.yml
