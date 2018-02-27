@@ -1,10 +1,11 @@
 version: 0.2
 
 env:
+  vairables:
+    BASE_PATH: 'https://ewgyv4exw4.execute-api.eu-central-1.amazonaws.com/Stage'
   parameter-store:
     WEBSITE_BUCKET: '/theartofgin/websitebucket'
     CODEBUILD_BUCKET: '/theartofgin/codebuildbucket'
-    BASE_PATH: 'https://ewgyv4exw4.execute-api.eu-central-1.amazonaws.com/Stage'
 
 phases:
   build:
