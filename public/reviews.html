@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body onload="load()">
+        <h1>Much Review Very Gin</h1>
+        <nav>
+        <a href="/reviews.html">List Reviews</a>
+        <a href="/">Write Review</a>
+        </nav>
+        <table class="table" id=reviews border=5>
+            <tr>
+                <th>What</th>
+                <th>Why</th>
+            </tr>
+            <tr>
+                <td>Gin Mare</td>
+                <td>Owesome Apossum</td>
+            </tr>
+        </table>
+
+        <div id='foo'>nothing</div>
+
+<script>
+function load(){
+    console.log("in load method");
+    $.get("http://127.0.0.1:1331/reviews" , function( data ) {
+        console.log("Got the data")
+        console.log(data)
+        $('#foo').text( JSON.stringify(data, null,2 ) )
+    })
+}
+</script>
+
+
+         <script src="js/jquery1.12.4.min.js"></script>
+         <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>
+
