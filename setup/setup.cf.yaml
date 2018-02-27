@@ -191,7 +191,7 @@ Resources:
   CodeBuildBucketSSMParameter:
     Type: "AWS::SSM::Parameter"
     Properties:
-      Name: /theartofgin/codbuildbucket
+      Name: /theartofgin/codebuildbucket
       Type: String
       Value: !Ref WebsiteBucket
 
