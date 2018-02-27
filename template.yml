@@ -56,15 +56,37 @@ Resources:
   PostGinReview:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: index.post_gin_review
+      Handler: index.reviews
       Runtime: python3.6
       Role: !GetAtt LambdaTrustRole.Arn
       Events:
         GetEvent:
           Type: Api
           Properties:
-            Path: /review
+            Path: /reviews
             Method: post
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /reviews
+            Method: get
+  CORS:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.options
+      Runtime: python3.6
+      Role: !GetAtt LambdaTrustRole.Arn
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: options
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /reviews
+            Method: options
   GinReviews:
     Type: AWS::Serverless::SimpleTable
     Properties:

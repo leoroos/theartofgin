@@ -4,12 +4,13 @@ env:
   parameter-store:
     WEBSITE_BUCKET: '/theartofgin/websitebucket'
     CODEBUILD_BUCKET: '/theartofgin/codebuildbucket'
+    BASE_PATH: 'https://ewgyv4exw4.execute-api.eu-central-1.amazonaws.com/Stage'
 
 phases:
   build:
     commands:
       - pip install --upgrade awscli
-      - aws s3 cp 
+      - sed -e "s;http://127.0.0.1:1331/;$BASE_PATH/;g" public/*.html -i
       - aws s3 cp --recursive s3://theartofgin-codebuild/website-artifacts/css public/css
       - aws s3 cp --recursive s3://theartofgin-codebuild/website-artifacts/js public/js
       - aws s3 cp --recursive public/ s3://$WEBSITE_BUCKET/

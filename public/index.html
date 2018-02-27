@@ -5,6 +5,19 @@
     </head>
     <body>
         <h1>Easy now Fuzzy Little Man Peach</h1>
+        <nav>
+        <a href="/reviews.html">List Reviews</a>
+        <a href="/">Write Review</a>
+        </nav>
+
+        <form action="http://127.0.0.1:1331/review" method="post" autocomplete="off">
+            <div class="form-group">
+                <label for="GinReview">Example textarea</label>
+                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+            </div>
+            <input type="hidden" name="next_url" value="http://127.0.0.1:1331/abasfasdf"> 
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
 
          <script src="js/jquery1.12.4.min.js"></script>
          <script src="js/bootstrap.min.js"></script>
