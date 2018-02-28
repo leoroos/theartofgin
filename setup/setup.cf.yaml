@@ -46,7 +46,7 @@ Resources:
                 - logs:PutLogEvents
               - Effect: Allow
                 Resource:
-                - arn:aws:s3:::theartofgin-codebuild-artifacts/*
+                - arn:aws:s3:::theartofgin-codebuild*
                 - !Sub "${WebsiteBucket.Arn}/*"
                 - arn:aws:s3:::codepipeline-eu-central-1-*
                 Action:
@@ -55,6 +55,7 @@ Resources:
                 Action:
                 - s3:GetObject
                 - s3:GetObjectVersion
+                - s3:List*
                 Resource: '*'
               - Effect: Allow
                 Resource:
