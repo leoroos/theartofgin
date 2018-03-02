@@ -46,8 +46,10 @@ def reviews_get(event, context):
 
 def reviews_post(event, context):
     params = parse.parse_qs(event['body'])
+    ginName = params['ginName'][0]
     ginReview = params['ginReview'][0]
-    print('Gin review:' , ginReview)
+    print('Gin Name is:', ginName)
+    print('Gin Review:' , ginReview)
     data = {
         'success': True,
         'message': 'Got the body:' + json.dumps(event['body']),
